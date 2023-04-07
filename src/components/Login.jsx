@@ -1,5 +1,6 @@
 import { useState } from "react"
-
+import {auth} from '../firebase'
+import {signInWithEmailAndPassword} from 'firebase/auth'
 function Login()
 {
     const [email,setEmail]=useState("")
@@ -13,8 +14,11 @@ function Login()
     {
         setPassword(e.target.value)
     }
-    const printResult=()=>{
-        alert(email+" "+password)
+    const printResult= async function(){
+        
+        let userCredential=await signInWithEmailAndPassword(auth,email,password)
+
+        console.log(userCredential.user)
     }
 
     return(
