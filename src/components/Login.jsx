@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {auth} from '../firebase'
 import {signInWithEmailAndPassword,signOut} from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 function Login()
 {
     const [email,setEmail]=useState("")
@@ -8,6 +9,29 @@ function Login()
     const [user,setUser]=useState(null)
     const [load,setLoad]=useState(false)
     const[error,setError]=useState("")
+    const[mainLoad,setmainLoad]=useState(true)
+
+    useEffect(()=>{
+       
+        onAuthStateChanged(auth, (user) => {
+        if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+        // const uid = user.uid;
+
+        setUser(user)
+
+           // ...
+        } else {
+                  // User is signed out
+                  setUser(null)
+               }
+        setmainLoad(false)
+
+    },[]);
+    
+
+    })
 
     const trackEmail=function(e)
     {
@@ -46,7 +70,7 @@ function Login()
 
     return(
         <>
-        {
+        {   mainLoad==true?<h1>...page is Loading</h1>:
             error != "" ?<h1>error is {error}</h1>:
             load!=false?<h1>......Loading</h1>:
             user != null? <><h1>user is {user.uid}</h1> <button onClick={logOut}>LogOut</button></>:
