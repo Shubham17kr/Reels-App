@@ -12,6 +12,7 @@ function Login()
     const trackEmail=function(e)
     {
         setEmail(e.target.value)
+        
     }
     const trackpassword=function(e)
     {
@@ -50,7 +51,7 @@ function Login()
             load!=false?<h1>......Loading</h1>:
             user != null? <><h1>user is {user.uid}</h1> <button onClick={logOut}>LogOut</button></>:
         <>
-        <input type="email"  onChange={trackEmail} placeholder="Email"/><br/>
+        <input type="email"   onChange={trackEmail} placeholder="Email"/><br/>
         <input type="password"  onChange={trackpassword} placeholder="password"/><br/>
         <button type="click" onClick={printResult} >Login</button>
         </>
