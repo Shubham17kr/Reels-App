@@ -9,7 +9,7 @@ function Login()
     const [user,setUser]=useState(null)
     const [load,setLoad]=useState(false)
     const[error,setError]=useState("")
-    const[mainLoad,setmainLoad]=useState(true)
+    
 
     useEffect(()=>{
        
@@ -26,7 +26,7 @@ function Login()
                   // User is signed out
                   setUser(null)
                }
-        setmainLoad(false)
+        
 
     },[]);
     
@@ -70,7 +70,7 @@ function Login()
 
     return(
         <>
-        {   mainLoad==true?<h1>...page is Loading</h1>:
+        {  
             error != "" ?<h1>error is {error}</h1>:
             load!=false?<h1>......Loading</h1>:
             user != null? <><h1>user is {user.uid}</h1> <button onClick={logOut}>LogOut</button></>:
