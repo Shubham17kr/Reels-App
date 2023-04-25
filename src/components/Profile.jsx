@@ -1,11 +1,32 @@
 import './profile.css'
-import { auth } from '../firebase'
-import { useContext } from 'react'
+import { auth, db } from '../firebase'
+import { useContext, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import React from 'react'
+import { doc, getDoc } from 'firebase/firestore'
 function Profile()
 {
     let cUser=useContext(AuthContext)
+
+     useEffect(function fn(){
+            (async function(){
+
+        if(cUser)
+        {
+            const docRef= doc(db,"users",cUser.uid)
+            const docSnap=await getDoc(docRef)
+            console.log("Document data",docSnap)
+            if(docSnap.exists()){
+
+                console.log(docSnap.data())
+            }
+            else{
+                console.log("No Data");
+            }
+        }
+    })()
+},[cUser])
+
     return(
 
         <>
