@@ -13,15 +13,18 @@ function App() {
    <AuthContextProvider>
     <Switch>
 
-       <Route path="/feed">
+        <PrivateRoute path="/feed" comp={Feed}></PrivateRoute>
+       {/* <Route path="/feed">
           <Feed></Feed>
-       </Route>
-       <Route path="/login">
+       </Route> */}
+       <RedirectToFeed path="/login" comp={Login}></RedirectToFeed>
+       {/* <Route path="/login">
           <Login></Login>
-       </Route>
-       <Route path="/signup">
+       </Route> */}
+       <RedirectToFeed path="/signup" comp={Signup}></RedirectToFeed>
+       {/* <Route path="/signup">
           <Signup></Signup>
-       </Route>
+       </Route> */}
        <PrivateRoute path="/profile" comp={Profile}></PrivateRoute>
        {/* <Route path="/profile">
           <Profile></Profile>
@@ -50,6 +53,23 @@ function PrivateRoute(props)
       }
       ></Route>
    )
+}
+
+function RedirectToFeed(props)
+{
+   let Component= props.comp;
+   let cUser=useContext(AuthContext);
+
+   return(
+      <Route
+      {...props}
+      render={(props)=>
+      {
+         return cUser!=null?<Redirect {...props} to="/feed"></Redirect>:<Component {...props}></Component>
+      }}
+      ></Route>
+   )
+
 }
 
 export default App;
